@@ -1,20 +1,27 @@
 services:
   postgres:
+    env_file:
+      - .env
     image: "postgres"
-    environment:
-      - POSTGRES_USER=root
-      - POSTGRES_PASSWORD=root
-      - POSTGRES_DB=root
     ports:
-      - 5432:5432
+      - "${DB_HOST_PORT}:${DB_IMAGE_PORT}"
     volumes:
       - ./postgres-data:/var/lib/postgresql/data
 
   app:
+    env_file:
+      - .env
     build:
       context: .
       target: production
+      args:
+        - APP_IMAGE_PORT=${APP_IMAGE_PORT}
+        - DB_HOST_PORT=${DB_HOST_PORT}
+        - DB_HOST=${DB_HOST}
+        - DB_NAME=${DB_NAME}
+        - DB_USER=${DB_USER}
+        - DB_PASSWORD=${DB_PASSWORD}
     ports:
-      - 8080:8080
+      - "${APP_HOST_PORT}:${APP_IMAGE_PORT}"
     depends_on:
       - postgres
