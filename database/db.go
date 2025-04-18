@@ -1,8 +1,10 @@
 package database
 
 import (
+	"fmt"
 	"log"
 	"os"
+
 	"github.com/guilhermeonrails/api-go-gin/models"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -14,13 +16,13 @@ var (
 )
 
 func ConectaComBancoDeDados() {
-	host := os.GetEnv("DB_HOST")
-	user := os.GetEnv("DB_USER")
-	password := os.GetEnv("DB_PASSWORD")
-	name := os.GetEnv("DB_NAME")
-	port := os.GetEnv("DB_PORT")
+	host := os.Getenv("DB_HOST")
+	user := os.Getenv("DB_USER")
+	password := os.Getenv("DB_PASSWORD")
+	name := os.Getenv("DB_NAME")
+	port := os.Getenv("DB_PORT")
 
-	stringDeConexao := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable", host, user, password, port)
+	stringDeConexao := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable", host, user, password, name, port)
 	
 	DB, err = gorm.Open(postgres.Open(stringDeConexao))
 	
