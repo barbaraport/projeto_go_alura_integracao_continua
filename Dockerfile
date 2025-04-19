@@ -1,4 +1,4 @@
-FROM golang:1.22-alpine AS build
+FROM golang:1.24-alpine AS build
 
 WORKDIR /app
 
@@ -12,7 +12,7 @@ COPY ./go.sum /app/go.sum
 
 RUN go build main.go
 
-FROM alpine:latest AS production
+FROM alpine:3.21 AS production
 
 ARG APP_IMAGE_PORT
 ARG DB_HOST_PORT
